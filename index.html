@@ -1,11 +1,532 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>謝宛錡的GitHub io</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人簡歷</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap');
+
+        :root {
+            /* 奶茶色調色盤 */
+            --milk-tea: #D4B896;
+            --dark-tea: #A67C52;
+            --light-tea: #F5E6D3;
+            --cream: #FBF7F0;
+            --brown-text: #5D4037;
+            --warm-white: #FEFCF8;
+            --accent-gold: #C8860D;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', 'Microsoft JhengHei', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--light-tea) 100%);
+            color: var(--brown-text);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            background: var(--warm-white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(161, 136, 127, 0.15);
+        }
+
+        /* 左側個人資訊區 */
+        .sidebar {
+            background: linear-gradient(180deg, var(--milk-tea) 0%, var(--dark-tea) 100%);
+            color: white;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .profile-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            object-fit: cover;
+            object-position: center;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar h1 {
+            font-size: 2.2em;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar .title {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .contact-info {
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .contact-item::before {
+            content: "📧";
+            margin-right: 12px;
+            font-size: 1.1em;
+        }
+
+        /* 右側主要內容區 */
+        .main-content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--dark-tea);
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--milk-tea) 0%, var(--accent-gold) 100%);
+            border-radius: 2px;
+        }
+
+        /* About 區域 */
+        .about p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: var(--brown-text);
+            background: var(--light-tea);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid var(--milk-tea);
+        }
+
+        /* 教育背景 */
+        .education-item {
+            background: var(--cream);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--milk-tea);
+            margin-bottom: 15px;
+        }
+
+        .education-item h4 {
+            font-size: 1.2em;
+            color: var(--dark-tea);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .education-item p {
+            color: var(--brown-text);
+            font-size: 0.95em;
+        }
+
+        /* 工作經驗 */
+        .experience-item {
+            background: var(--warm-white);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--light-tea);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--milk-tea) 0%, var(--dark-tea) 100%);
+            border-radius: 0 2px 2px 0;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .experience-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--dark-tea);
+            margin-bottom: 5px;
+        }
+
+        .experience-company {
+            font-size: 1.1em;
+            color: var(--milk-tea);
+            font-weight: 600;
+        }
+
+        .experience-period {
+            background: var(--light-tea);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: var(--dark-tea);
+            font-weight: 500;
+        }
+
+        .experience-desc {
+            color: var(--brown-text);
+            line-height: 1.7;
+        }
+
+        .experience-desc ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .experience-desc li {
+            margin-bottom: 8px;
+        }
+
+        /* 技能與證照 */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-category {
+            background: var(--light-tea);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--milk-tea);
+        }
+
+        .skill-category h4 {
+            color: var(--dark-tea);
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background: var(--milk-tea);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        .cert-item {
+            background: var(--warm-white);
+            padding: 15px 20px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-gold);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cert-item-with-image {
+            background: var(--warm-white);
+            padding: 15px 20px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-gold);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cert-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex: 1;
+        }
+
+        .cert-image-placeholder {
+            margin-left: 15px;
+        }
+
+        .cert-name {
+            font-weight: 600;
+            color: var(--dark-tea);
+        }
+
+        .cert-badge {
+            background: var(--accent-gold);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            
+            .sidebar, .main-content {
+                padding: 30px 20px;
+            }
+            
+            .profile-photo {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .sidebar h1 {
+                font-size: 1.8em;
+            }
+            
+            .experience-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .experience-period {
+                margin-top: 10px;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 動畫效果 */
+        .container {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: slideIn 0.6s ease-out forwards;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>謝宛錡的GitHub.io</h1>
+    <div class="container">
+        <!-- 左側個人資訊區 -->
+        <div class="sidebar">
+            <img src="profile.jpg" alt="個人照片" class="profile-photo">
+            <h1>您的姓名</h1>
+            <div class="title">軟體工程師 • Java開發者</div>
+            
+            <div class="contact-info">
+                <h3>聯絡方式</h3>
+                <div class="contact-item">your.email@example.com</div>
+                <div class="contact-item" style="margin-top: 20px;">
+                    <strong>核心技能</strong>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px;">
+                    <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 0.85em;">Java SE</span>
+                    <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 0.85em;">Java EE</span>
+                    <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 0.85em;">MySQL</span>
+                    <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 0.85em;">Spring</span>
+                    <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 0.85em;">JSP</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右側主要內容區 -->
+        <div class="main-content">
+            <!-- 個人簡介 -->
+            <div class="section about">
+                <h2>關於我</h2>
+                <p>
+                    從金融背景轉入軟體開發領域，擁有扎實的程式設計基礎和豐富的實務經驗。
+                    在富邦人壽的行政工作中培養了細心負責的工作態度，
+                    後續在聖森雲端科技擔任軟體助理工程師期間，深入學習Java Web開發技術。
+                    持續精進技術能力，致力於開發高品質的軟體解決方案。
+                </p>
+            </div>
+
+            <!-- 工作經驗 -->
+            <div class="section">
+                <h2>工作經驗</h2>
+                
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="experience-title">軟體助理工程師</div>
+                            <div class="experience-company">聖森雲端科技</div>
+                        </div>
+                        <div class="experience-period">2024/6 - 2025/7</div>
+                    </div>
+                    <div class="experience-desc">
+<!--                         <ul>
+                            <li>參與Java Web應用程式開發，使用Spring框架進行後端開發</li>
+                            <li>負責資料庫設計與優化，熟練使用MySQL進行資料處理</li>
+                            <li>開發JSP頁面，實現前後端資料交互功能</li>
+                            <li>參與專案需求分析，協助系統功能規劃與實作</li>
+                            <li>進行程式碼測試與除錯，確保系統穩定性</li>
+                        </ul> -->
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="experience-title">行政助理</div>
+                            <div class="experience-company">富邦人壽</div>
+                        </div>
+                        <div class="experience-period">2021/9 - 2024/6</div>
+                    </div>
+                    <div class="experience-desc">
+<!--                         <ul>
+                            <li>處理保險業務相關行政作業，包括契約管理與客戶資料維護</li>
+                            <li>協助業務團隊進行資料分析與報表製作</li>
+                            <li>運用Excel進行資料處理與統計分析</li>
+                            <li>負責內部流程優化，提升作業效率</li>
+                            <li>與客戶及內部單位溝通協調，確保業務順利進行</li>
+                        </ul> -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 教育背景 -->
+            <div class="section">
+                <h2>教育背景</h2>
+                <div class="education-item">
+                    <h4>國立台北大學</h4>
+                    <p>金融與合作經營學系 學士學位</p>
+                </div>
+            </div>
+
+            <!-- 技能與證照 -->
+            <div class="section">
+                <h2>技能與證照</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4>🚀 程式開發技能</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Java SE</span>
+                            <span class="skill-tag">Java EE</span>
+                            <span class="skill-tag">MySQL</span>
+                            <span class="skill-tag">JSP</span>
+                            <span class="skill-tag">Spring Boot</span>
+                            <span class="skill-tag">MVC架構</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h4 style="color: var(--dark-tea); margin-bottom: 20px; font-size: 1.2em;">🏆 專業證照</h4>
+                    
+                    <div class="cert-item-with-image">
+                        <div class="cert-content">
+                            <span class="cert-name">Oracle Certified Professional Java SE 11 Developer (OCP JSE 11)</span>
+                            <span class="cert-badge">專業</span>
+                        </div>
+                        <div class="cert-image-placeholder">
+                            <img src="oracle-cert.jpg" alt="Oracle認證證書" style="width: 80px; height: 60px; border-radius: 6px; object-fit: cover; border: 2px solid var(--milk-tea);">
+                        </div>
+                    </div>
+                    
+                    <div class="cert-item-with-image">
+                        <div class="cert-content">
+                            <span class="cert-name">Oracle Certified Professional Java EE 7 Application Developer</span>
+                            <span class="cert-badge">專業</span>
+                        </div>
+                        <div class="cert-image-placeholder">
+                            <img src="oracle-ee-cert.jpg" alt="Oracle EE認證證書" style="width: 80px; height: 60px; border-radius: 6px; object-fit: cover; border: 2px solid var(--milk-tea);">
+                        </div>
+                    </div>
+                    
+                    <div class="cert-item">
+                        <span class="cert-name">人身保險業務員</span>
+                        <span class="cert-badge">金融</span>
+                    </div>
+                    
+                    <div class="cert-item">
+                        <span class="cert-name">產險業務員</span>
+                        <span class="cert-badge">金融</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
